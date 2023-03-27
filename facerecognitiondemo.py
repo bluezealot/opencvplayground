@@ -27,7 +27,7 @@ class FaceRecognitionDemo:
             face_distances = face_recognition.face_distance(self.known_face_encodings, image_encoding)
             best_match = np.argmin(face_distances)
             name = 'Unknown'
-            if results[best_match]:
+            if results[best_match] and face_distances[best_match] < 0.4:
                 name = self.known_face_names[best_match]
             names.append(name)
         return names, locations
