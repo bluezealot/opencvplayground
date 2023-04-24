@@ -15,18 +15,17 @@ def processoneresult(result, img):
                   (255, 0, 255),
                   (0, 255, 255),
                   (255, 255, 0),
-                  (128, 128, 128),
-                  (156, 23, 137)]
+                  (128, 128, 128)]
     for cls, box, conf in zip(classes, bboxes, confidences):
         (x, y, x2, y2) = box
-        cv2.rectangle(img, (x, y), (x2, y2), color_list[cls], 1)
-        cv2.putText(img, str(result.names[cls]), (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 1, color_list[cls], 2)
-        cv2.putText(img, "{:.2f}".format(conf), (x, y2 + 5), cv2.FONT_HERSHEY_SIMPLEX, 1, color_list[cls], 2)
+        cv2.rectangle(img, (x, y), (x2, y2), color_list[cls % 7], 1)
+        cv2.putText(img, str(result.names[cls]), (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 1, color_list[cls % 7], 2)
+        cv2.putText(img, "{:.2f}".format(conf), (x, y2 + 5), cv2.FONT_HERSHEY_SIMPLEX, 1, color_list[cls % 7], 2)
 
 if __name__ == "__main__":
     # load a image
-    img = cv2.imread('/Users/qinxizhou/work/git/github/opencvplayground/face_samples/xianstreet.jpg')
-    model = YOLO('yolov8n')
+    img = cv2.imread('generate/frame00113.jpg')
+    model = YOLO('yolov8x')
     # yolo results are pytorch tensors
     results = model(img)
     for result in results:
